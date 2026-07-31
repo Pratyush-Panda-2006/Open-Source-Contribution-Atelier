@@ -8,7 +8,7 @@ from .serializers import NotificationSerializer, PushSubscriptionSerializer
 from .models import NotificationPreference
 
 class NotificationPrefsView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
     
     def get(self, request):
         prefs, _ = NotificationPreference.objects.get_or_create(user=request.user)
@@ -30,6 +30,13 @@ class NotificationPrefsView(APIView):
                 prefs.websocket_enabled = request.data['websocket_enabled']
             
             prefs.save()
+            return Response({
+                'email': prefs.email_enabled,
+                'in_app': prefs.in_app_enabled,
+                'websocket': prefs.websocket_enabled,
+            })
+        except Exception as e:
+            return Response({'error': str(e)}, status=400)
 
 class NotificationListView(generics.ListAPIView):
     """GET /api/notifications/ — list current user's notifications"""
@@ -113,3 +120,17 @@ class UnsubscribePushView(APIView):
         return Response(
             {"detail": "Unsubscribed successfully."}, status=status.HTTP_200_OK
         )
+
+
+class DigestAPIView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        return Response({"digest": []}, status=status.HTTP_200_OK)
+
+
+class DigestReadView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        return Response({"status": "read"}, status=status.HTTP_200_OK)

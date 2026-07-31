@@ -1056,3 +1056,31 @@ class ADRScenarioViewSet(viewsets.ReadOnlyModelViewSet):
         )
 
         return Response({"is_successful": is_successful, "feedback": feedback})
+
+
+from .services.diff_service import compute_diff
+
+
+class SandboxDiffSerializer(serializers.Serializer):
+    expected = serializers.CharField(allow_blank=True, default="")
+    submitted = serializers.CharField(allow_blank=True, default="")
+
+
+class SandboxDiffView(APIView):
+    """
+    Computes visual line-by-line diff comparing expected solution vs user submission.
+    """
+
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        serializer = SandboxDiffSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        diff_result = compute_diff(
+            expected=serializer.validated_data["expected"],
+            submitted=serializer.validated_data["submitted"],
+        )
+
+        return Response(diff_result, status=status.HTTP_200_OK)
+

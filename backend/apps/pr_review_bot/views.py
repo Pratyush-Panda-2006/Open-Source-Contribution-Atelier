@@ -8,7 +8,6 @@ from .serializers import (
     PRReviewSerializer,
     ReviewConfigSerializer,
 )
-from .views.impact_views import PRImpactAnalysisViewSet
 
 
 class PRReviewViewSet(viewsets.ModelViewSet):

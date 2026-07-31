@@ -1,4 +1,5 @@
 from __future__ import annotations
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
@@ -177,7 +178,7 @@ class LessonProgress(models.Model):
     score = models.PositiveIntegerField(default=0)
     base_score = models.PositiveIntegerField(default=0)
     multiplier_applied = models.FloatField(default=1.0)
-   attempt_count = models.PositiveIntegerField(default=0)
+    attempt_count = models.PositiveIntegerField(default=0)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
@@ -551,20 +552,6 @@ class UserNote(models.Model):
 
     def __str__(self):
         return f"Note by {self.user.username} for {self.lesson.slug}"
-from __future__ import annotations
-
-from django.contrib.auth import get_user_model
-
-User = get_user_model()
-
-from django.conf import settings
-from django.core.exceptions import ObjectDoesNotExist
-from django.core.validators import MaxValueValidator, MinValueValidator
-from django.db import models
-from django.utils import timezone
-
-from apps.content.models import Exercise, Lesson
-from apps.organizations.models import Organization
 
 STREAK_MILESTONES = [
     {"days": 3, "multiplier": 1.1, "label": "3-Day Streak"},

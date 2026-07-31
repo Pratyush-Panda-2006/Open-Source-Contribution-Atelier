@@ -23,11 +23,11 @@ from .views import (
     ProjectFileViewSet,
     ProjectViewSet,
     SandboxVerifyView,
+    SandboxDiffView,
     SnippetCollectionViewSet,
     TriageIssueViewSet,
     WorkspaceSnapshotViewSet,
 )
-from .views.rebase_views import GitRebaseSimulatorViewSet
 
 # ============================================================
 # Router Configuration
@@ -64,7 +64,6 @@ router.register(
 )
 router.register(r"triage-issues", TriageIssueViewSet, basename="triage-issue")
 router.register(r"adr-scenarios", ADRScenarioViewSet, basename="adr-scenario")
-router.register(r"rebase-simulator", GitRebaseSimulatorViewSet, basename="rebase-simulator")
 
 # ============================================================
 # URL Patterns
@@ -72,6 +71,7 @@ router.register(r"rebase-simulator", GitRebaseSimulatorViewSet, basename="rebase
 
 urlpatterns = [
     path("verify/", SandboxVerifyView.as_view(), name="sandbox-verify"),
+    path("diff/", SandboxDiffView.as_view(), name="sandbox-diff"),
     path("execution-status/", ExecutionStatusView.as_view(), name="execution-status"),
     path("clear-execution/", ClearExecutionView.as_view(), name="clear-execution"),
     path("", include(router.urls)),

@@ -204,14 +204,9 @@ INSTALLED_APPS = [
     "apps.events",
     "apps.portfolio",
     "apps.feature_flags",
-    "apps.issues",
-<<<<<<< HEAD
-"apps.moderation",
-=======
     "apps.gamification",
     "apps.ai_tutor",
     "apps.project_health",
->>>>>>> 02ece0c8009596a33fbf5bc0bc7298ff74711560
     "django_q",
     "apps.monitoring",
     "waffle",

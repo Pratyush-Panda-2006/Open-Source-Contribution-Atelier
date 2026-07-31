@@ -41,6 +41,7 @@ class IssueReport(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
+        app_label = "issues"
         ordering = ["-created_at"]
 
     def __str__(self):
@@ -78,6 +79,7 @@ class Bounty(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
+        app_label = "issues"
         ordering = ["-created_at"]
 
     def __str__(self):
@@ -104,6 +106,7 @@ class BountySubmission(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
+        app_label = "issues"
         ordering = ["-created_at"]
 
     def __str__(self):
